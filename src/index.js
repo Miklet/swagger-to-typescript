@@ -13,7 +13,7 @@ const DEFAULT_OUTPUT_FILENAME = 'swagger-to-typescript.d.ts';
 
 async function main(options) {
   options.source = options.source || TEST_SWAGGER_UI_URL;
-  options.dist = options.dist || DEFAULT_OUTPUT_DIR;
+  options.output = options.output || DEFAULT_OUTPUT_DIR;
   options.filename = DEFAULT_OUTPUT_FILENAME;
 
   let swaggerConfig = await readSwaggerConfig(options.source);
