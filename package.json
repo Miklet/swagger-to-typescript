@@ -5,6 +5,10 @@
   "author": "Paweł Mikołajczyk",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
   "dependencies": {
     "minimist": "^1.2.0",
     "node-fetch": "^2.6.0"
