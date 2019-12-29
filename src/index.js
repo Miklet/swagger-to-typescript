@@ -1,6 +1,3 @@
-const fetch = require('node-fetch');
-const fs = require('fs');
-const path = require('path');
 const prettier = require('prettier');
 const minimist = require('minimist');
 const { measureDuration } = require('./measure-duration');
