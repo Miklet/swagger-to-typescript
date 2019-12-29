@@ -7,6 +7,8 @@ const { measureDuration } = require('./measure-duration');
 const { convertSchemaToType } = require('./convert-schema-to-type');
 const { writeDefinitionFile } = require('./write-definition-file');
 const { readSwaggerConfig } = require('./read-swagger-config');
+const { createObjectProperty } = require('./create-object-property');
+const { createTypesFromPathEntry } = require('./create-types-from-path-entry');
 
 const DEFAULT_OUTPUT_DIR = 'dist';
 const DEFAULT_OUTPUT_FILENAME = 'swagger-to-typescript.d.ts';
@@ -21,7 +23,7 @@ async function main(options) {
   let typeDefinitionFileContent = '';
 
   for (let pathEntry of Object.entries(swaggerConfig.paths)) {
-    let typeAlias = createTypeFromPath(pathEntry);
+    let typeAlias = createTypesFromPathEntry(pathEntry);
 
     if (typeAlias === '') continue;
 
@@ -49,62 +51,17 @@ async function main(options) {
   );
 }
 
-function capitalizeFirstLetter(value) {
-  return `${value.slice(0, 1).toUpperCase()}${value.slice(1)}`;
-}
-
-function createTypeFromPath([pathKey, pathValue]) {
-  let methodsEntries = Object.entries(pathValue);
-  let pathTypes = '';
-
-  for (let [methodKey, methodValue] of methodsEntries) {
-    if (!methodValue.operationId) {
-      console.warn(
-        `Skipping generating type for path ${pathKey} and method ${methodKey}. Property 'operationId' is required to generate proper type name.`
-      );
-    }
-    let methodTypeName = capitalizeFirstLetter(methodValue.operationId);
-
-    // if (methodValue.parameters.length > 0) {
-    //   pathTypes += `type ${methodTypeName}Parameters = {}\n`;
-    // }
-
-    if (methodValue.responses['200']) {
-      pathTypes +=
-        createTypeFromResponseSchema(
-          `${methodTypeName}Response`,
-          methodValue.responses['200'].schema
-        ) + '\n';
-    }
-  }
-
-  return pathTypes;
-}
-
-function createTypeFromResponseSchema(name, schema) {
-  let typeDefinition = '';
-
-  if (schema.$ref || schema.type) {
-    typeDefinition += `type ${name} = `;
-    let tsType = convertSchemaToType(schema);
-    typeDefinition += `${tsType}`;
-    return typeDefinition;
-  }
-
-  console.warn(
-    `Missing $ref or type property in response schema. Skipping generating type for ${name}.`
-  );
-}
-
 function createTypeFromDefinition([definitionKey, definitionValue]) {
   let definitionEntries = Object.entries(definitionValue.properties);
+  let requiredProperties = definitionValue.required || [];
   let typeDefinition = '';
 
   typeDefinition += `type ${definitionKey} = {\n`;
 
   definitionEntries.forEach(([propertyKey, propertyValue]) => {
     let tsType = convertSchemaToType(propertyValue);
-    typeDefinition += `${propertyKey}: ${tsType};\n`;
+    let isRequired = requiredProperties.includes(propertyKey);
+    typeDefinition += createObjectProperty(propertyKey, tsType, isRequired);
   });
 
   typeDefinition += '}\n';
