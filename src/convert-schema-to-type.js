@@ -1,19 +1,23 @@
 // @ts-check
 
-const PRIMITIVE_TYPES = ['number', 'string', 'boolean', 'integer'];
+const PRIMITIVE_TYPES = ['number', 'string', 'boolean'];
 
-const SWAGGER_TYPES_TO_TS_TYPES_MAP = new Map([['integer', 'number']]);
+const SWAGGER_TYPES_TO_TS_TYPES_MAP = new Map([
+  ['integer', 'number'],
+  ['file', 'File']
+]);
 
 function convertSchemaToType(schema) {
   let schemaType = schema.type;
 
   if (PRIMITIVE_TYPES.includes(schemaType)) {
-    let mappedType = SWAGGER_TYPES_TO_TS_TYPES_MAP.get(schemaType);
-
-    if (mappedType) {
-      return mappedType;
-    }
     return schemaType;
+  }
+
+  let mappedType = SWAGGER_TYPES_TO_TS_TYPES_MAP.get(schemaType);
+
+  if (mappedType) {
+    return mappedType;
   }
 
   if (schemaType === 'array') {

@@ -2,10 +2,22 @@ const { convertSchemaToType } = require('../convert-schema-to-type');
 
 test.each`
   type         | expectedResult
-  ${'integer'} | ${'number'}
+  ${'number'}  | ${'number'}
   ${'boolean'} | ${'boolean'}
   ${'string'}  | ${'string'}
 `('converts primitive types', ({ type, expectedResult }) => {
+  let result = convertSchemaToType({
+    type
+  });
+
+  expect(result).toBe(expectedResult);
+});
+
+test.each`
+  type         | expectedResult
+  ${'integer'} | ${'number'}
+  ${'file'}    | ${'File'}
+`('converts swagger types to typescript types', ({ type, expectedResult }) => {
   let result = convertSchemaToType({
     type
   });
