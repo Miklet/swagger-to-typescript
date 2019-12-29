@@ -1,11 +1,7 @@
 async function measureDuration(fn) {
   let hrStart = process.hrtime();
 
-  if ('then' in fn) {
-    await fn();
-  } else {
-    fn();
-  }
+  await fn();
 
   let [seconds, nanoseconds] = process.hrtime(hrStart);
   let milliseconds = nanoseconds / 1000000;
