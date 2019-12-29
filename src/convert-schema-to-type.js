@@ -1,5 +1,3 @@
-// @ts-check
-
 const PRIMITIVE_TYPES = ['number', 'string', 'boolean'];
 
 const SWAGGER_TYPES_TO_TS_TYPES_MAP = new Map([

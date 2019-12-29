@@ -80,8 +80,6 @@ function createInputTypeFromMethodParameters(name, parameters) {
 
   parametersType += '}\n';
 
-  // if (parameter.$ref || parameter.type) {
-  // parametersType += `type ${name}parameters = `;
   return parametersType;
 }
 

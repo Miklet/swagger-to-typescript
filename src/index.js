@@ -1,6 +1,6 @@
 const prettier = require('prettier');
 const minimist = require('minimist');
-const { measureDuration } = require('./measure-duration');
+const { measureDuration } = require('./utils/measure-duration');
 const { writeDefinitionFile } = require('./write-definition-file');
 const { readSwaggerConfig } = require('./read-swagger-config');
 const { createTypesFromPathEntry } = require('./create-types-from-path-entry');
@@ -12,7 +12,6 @@ const DEFAULT_OUTPUT_DIR = 'dist';
 const DEFAULT_OUTPUT_FILENAME = 'swagger-to-typescript.d.ts';
 
 async function main(options) {
-  options.source = options.source || TEST_SWAGGER_UI_URL;
   options.output = options.output || DEFAULT_OUTPUT_DIR;
   options.filename = DEFAULT_OUTPUT_FILENAME;
 

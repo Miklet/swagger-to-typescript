@@ -3,9 +3,9 @@ const path = require('path');
 const fs = require('fs');
 
 async function readSwaggerConfig(configPath) {
-  let isSourceNetworkResource = configPath.startsWith('http');
+  let isConfigResource = configPath.startsWith('http');
 
-  let config = isSourceNetworkResource
+  let config = isConfigResource
     ? await fetchSwaggerConfig(configPath)
     : readSwaggerConfigFile(configPath);
 

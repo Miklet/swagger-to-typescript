@@ -7,20 +7,33 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "lint": "eslint src/** --ignore-path .gitignore",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "minimist": "^1.2.0",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-jest": "^23.2.0",
     "husky": "^3.1.0",
     "jest": "^24.9.0",
+    "lint-staged": "^9.5.0",
     "prettier": "^1.19.1"
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn test"
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn lint && yarn test"
     }
+  },
+  "lint-staged": {
+    "*.{js, json}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
