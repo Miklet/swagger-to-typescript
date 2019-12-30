@@ -8,13 +8,6 @@ function createTypesFromPathEntry([pathKey, pathValue]) {
   for (let methodEntry of methodsEntries) {
     let [methodKey, methodValue] = methodEntry;
 
-    if (!methodValue.operationId) {
-      console.warn(
-        `Skipping generating type for path ${pathKey} and method ${methodKey}. Property 'operationId' is required to generate proper type name.`
-      );
-      continue;
-    }
-
     let typeName = capitalizeFirstLetter(methodValue.operationId);
 
     if (methodValue.parameters.length > 0) {
