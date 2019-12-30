@@ -1,4 +1,4 @@
-const { createObjectProperty } = require('./create-object-property');
+const { createObjectProperty } = require('./helpers/create-object-property');
 const { convertSchemaToType } = require('./convert-schema-to-type');
 
 function createTypesFromPathEntry([pathKey, pathValue]) {

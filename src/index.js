@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const prettier = require('prettier');
 const minimist = require('minimist');
 const { measureDuration } = require('./utils/measure-duration');
@@ -6,7 +8,7 @@ const { readSwaggerConfig } = require('./read-swagger-config');
 const { createTypesFromPathEntry } = require('./create-types-from-path-entry');
 const {
   createTypeFromDefinitionEntry
-} = require('./create-types-from-definition-entry');
+} = require('./create-type-from-definition-entry');
 
 const DEFAULT_OUTPUT_DIR = 'dist';
 const DEFAULT_OUTPUT_FILENAME = 'swagger-to-typescript.d.ts';
