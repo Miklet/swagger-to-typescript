@@ -1,3 +1,6 @@
+const {
+  extractNameFromNamespace
+} = require('./helpers/extract-name-from-namespace');
 const { createObjectProperty } = require('./helpers/create-object-property.js');
 const { createArray } = require('./helpers/create-array-type.js');
 
@@ -58,6 +61,12 @@ function convertSchemaToType(schema) {
 
   if (ref) {
     let refType = ref.split('/').slice(-1)[0];
+    let includesNamespace = refType.indexOf('.') !== -1;
+
+    if (includesNamespace) {
+      refType = extractNameFromNamespace(refType);
+    }
+
     return refType;
   }
 

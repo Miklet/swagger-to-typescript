@@ -70,3 +70,29 @@ test('creates type from definition entry with nested object', () => {
     `"type Definition = { key1: { key1_1: string; key1_2: AnotherDefinition; }; key2?: { key2_1?: boolean; key2_2: Array<number>; }; }"`
   );
 });
+
+test("extracts defnition's name when name includes namespace", () => {
+  let result = createTypeFromDefinitionEntry([
+    'Api.Controllers.ControllerDefinition.Definition',
+    {
+      properties: {
+        key1: {
+          type: 'object',
+          properties: {
+            key1_1: {
+              type: 'string'
+            },
+            key1_2: {
+              $ref: '#/definitions/AnotherDefinition'
+            }
+          },
+          required: ['key1_1', 'key1_2']
+        }
+      }
+    }
+  ]);
+
+  expect(result).toMatchInlineSnapshot(
+    `"type Definition = { key1?: { key1_1: string; key1_2: AnotherDefinition; }; }"`
+  );
+});

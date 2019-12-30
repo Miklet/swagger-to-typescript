@@ -60,6 +60,14 @@ test('converts $ref type', () => {
   expect(result).toBe('ReusableType');
 });
 
+test('converts $ref type with namespace', () => {
+  let result = convertSchemaToType({
+    $ref: '#/definitions/Api.Controllers.Controller.ReusableType'
+  });
+
+  expect(result).toBe('ReusableType');
+});
+
 test.each`
   type
   ${'foo'}
