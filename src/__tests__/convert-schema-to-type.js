@@ -90,6 +90,6 @@ test('converts flat objects', () => {
   });
 
   expect(result).toMatchInlineSnapshot(
-    `"{ key1: number key2: string key3: boolean }"`
+    `"{ key1?: number; key2?: string; key3?: boolean; }"`
   );
 });

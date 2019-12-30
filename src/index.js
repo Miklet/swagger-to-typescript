@@ -5,7 +5,7 @@ const { writeDefinitionFile } = require('./write-definition-file');
 const { readSwaggerConfig } = require('./read-swagger-config');
 const { createTypesFromPathEntry } = require('./create-types-from-path-entry');
 const {
-  createTypesFromDefinitionEntry
+  createTypeFromDefinitionEntry
 } = require('./create-types-from-definition-entry');
 
 const DEFAULT_OUTPUT_DIR = 'dist';
@@ -26,7 +26,7 @@ async function main(options) {
   }
 
   for (let definitionEntry of Object.entries(swaggerConfig.definitions)) {
-    let typeAlias = createTypesFromDefinitionEntry(definitionEntry);
+    let typeAlias = createTypeFromDefinitionEntry(definitionEntry);
     if (typeAlias === '') continue;
     typeDefinitionFileContent += typeAlias + '\n';
   }

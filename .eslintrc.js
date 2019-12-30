@@ -12,6 +12,7 @@ module.exports = {
     process: 'readonly'
   },
   parserOptions: {
+    sourceType: 'module',
     ecmaVersion: 2018
   },
   plugins: ['jest']
