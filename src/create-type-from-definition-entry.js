@@ -26,7 +26,7 @@ function createTypeFromDefinitionEntry([definitionKey, definitionValue]) {
     }
   });
 
-  typeDefinition += ' }';
+  typeDefinition += ' }\n';
 
   return typeDefinition;
 }
